@@ -7,7 +7,7 @@ Spaceman is a guessing game. There is a mystery word which the user tries to gue
 ### Requirements
 - [x] User must be able to enter letters to guess
 - [x] The user must get accurate feedback on if they guessed a correct letter or an incorrect letter
-- [ ] The user is always prompted to guess a letter until they win or lose
+- [x] The user is always prompted to guess a letter until they win or lose
 - [x] The game must use the provided list of words as its source (words.txt).
 - [x] User is allowed seven (7) incorrect guesses, and they should be told how many guesses they have left after each incorrect guess
 - [x] After guessing a letter, the user must be told the following:
@@ -22,10 +22,10 @@ Spaceman is a guessing game. There is a mystery word which the user tries to gue
 
 ### Stretch Challenges
 - [x] Alert the user if they guessed a letter they already guessed, and don’t have it count as an incorrect guess
-- [ ] Users can only guess individual letters at a time. If they guess anything other than an individual letter, they should be prompted and told to input only one letter
-- [ ] Prompt  the user to play again after a game ends. If they say yes, then start a new game.
+- [x] Users can only guess individual letters at a time. If they guess anything other than an individual letter, they should be prompted and told to input only one letter
+- [x] Prompt  the user to play again after a game ends. If they say yes, then start a new game.
 - [x] Change the number of incorrect guesses allowed to match the length of the mystery word
-- [ ] Show the user the mystery word when they lose
+- [x] Show the user the mystery word when they lose
 - [ ] Use ASCII art to draw the spaceman with each incorrect guess
 - [ ] Sinister Spaceman: After the user guesses a correct letter, change the mystery word to be a new mystery word that is the same word length and uses the same correctly guessed letters
 
