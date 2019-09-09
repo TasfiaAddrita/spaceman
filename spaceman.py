@@ -92,6 +92,58 @@ def is_guess_in_word(guess, secret_word):
         return True
     return False
 
+def ascii_art():
+    ascii_ = []
+    ascii_string = '''
+        .-"""-.       ||::::::==========
+       /= ___  \      ||::::::==========
+      |- /~~~\  |     ||::::::==========
+      |=( '.' ) |     ||================
+      \__\_=_/__/     ||================
+       {_______}      ||================
+     /` *       `'--._||
+    /= .     [] .     { >
+   /  /|ooo     |`'--'||
+  (   )\_______/      ||
+   \``\/       \      ||
+    `-| ==    \_|     ||
+      /         |     ||
+     |=   >\  __/     ||
+     \   \ |- --|     ||
+      \ __| \___/     ||
+ jgs  _{__} _{__}     ||
+     (    )(    )     ||
+ ^^~  `"""  `"""  ~^^^~^^~~~^^^~^^^~^^^~^^~^
+'''
+
+    index = 0
+    ascii_.append([])
+    for char in ascii_string:
+        ascii_[index].append(char)
+        if char == '\n':
+            ascii_.append([])
+            index += 1
+
+    return ascii_
+
+def print_ascii(secret_word_len, num_of_guesses):
+    ascii_ = ascii_art()
+
+    ascii_guess = int((len(ascii_) - (len(ascii_) % secret_word_len)) / secret_word_len)
+    ascii_lines_left = len(ascii_) - (len(ascii_) % secret_word_len)
+
+    for i in range(ascii_guess * num_of_guesses):
+        for char in ascii_[i]:
+            print(char, end='')
+
+    if num_of_guesses == secret_word_len:
+        for i in range(ascii_lines_left, secret_word_len + 1):
+            print(i)
+            for char in ascii_[i]:
+                print(char, end='')
+
+    print()
+
 def spaceman(secret_word):
     # '''
     # A function that controls the game of spaceman. Will start spaceman in the command line.
@@ -132,49 +184,138 @@ def spaceman(secret_word):
     #         return loser message
     #         ask user if user wants to play again
     # '''
-    print("Welcome to Spaceman!\n------------------------------")
     user_letter_guesses = ['_' for i in range(len(secret_word))]
     alphabet = "abcdefghijklmnopqrstuvwxyz"
-    play = True
     num_of_guesses = 0
     continue_ = True
-    # print(secret_word)
-    while play == True:
-        print(secret_word)
-        while num_of_guesses < len(secret_word) and continue_ == True:
-            letter = input('Enter a letter: ')
-            if letter not in alphabet:
-                print("You already guessed this letter!")
-            elif letter.isalpha() == False:
-                print("Please enter a valid character.")
-            elif len(letter) > 1:
-                print("Please enter only one number.")
+    while num_of_guesses < len(secret_word) and continue_ == True:
+        letter = input('Enter a letter: ').lower()
+        if len(letter) > 1:
+            print("Please enter only one letter.")
+        elif letter.isalpha() == False:
+            print("Please enter a valid character.")
+        elif letter not in alphabet:
+            print("You already guessed this letter!")
+        else:
+            if is_guess_in_word(letter, secret_word):
+                print("You got a letter!\n")
+                user_letter_guesses = get_guessed_word(letter, secret_word, user_letter_guesses)
+                if is_word_guessed(secret_word, user_letter_guesses):
+                    print("You won!")
+                    continue_ = False
             else:
-                if is_guess_in_word(letter, secret_word):
-                    print("You got a letter!\n")
-                    user_letter_guesses = get_guessed_word(letter, secret_word, user_letter_guesses)
-                    if is_word_guessed(secret_word, user_letter_guesses):
-                        print("You won!")
-                        continue_ = False
-                else:
-                    if num_of_guesses == len(secret_word):
-                        print("You lost!")
-                        continue_ = False
-                    else:
-                        num_of_guesses += 1
-                        print ("Incorrect letter!\nYou have {} guesses left.\n".format(len(secret_word) - num_of_guesses))
-                alphabet = alphabet.replace(letter, '_')
-                if continue_ == True:
-                    print(" ".join(user_letter_guesses))
-                    print("You have these letters left: {}".format(alphabet))
-            print("------------------------------")
-        print("The secret word is {}".format(secret_word))
+                num_of_guesses += 1
+                num_of_guesses_left = len(secret_word) - num_of_guesses
+                print ("Incorrect letter!\nYou have {} guesses left.\n".format(num_of_guesses_left))
+                if num_of_guesses_left == 0:
+                    print("You lost!")
+                    continue_ = False
+
+            alphabet = alphabet.replace(letter, '_')
+            if continue_ == True:
+                print(" ".join(user_letter_guesses))
+                print("You have these letters left: {}".format(alphabet))
+            print_ascii(len(secret_word), num_of_guesses)
+            print("------------------------------------------------------------")
+    print("The secret word is {}\n------------------------------------------------------------".format(secret_word))
+
+def main():
+    print("Welcome to Spaceman!\n------------------------------------------------------------")
+    play = True
+    while play == True:
+        secret_word = load_word()
+        spaceman(secret_word)
         play = input("Do you want to play again (y/n)?: ")
         play = False if play!='y' else True
-        num_of_guesses = 0
-        continue_ = True
+        print("------------------------------------------------------------")
     print("Thanks for playing! See ya later!")
 
-#These function calls that will start the game
-# secret_word = load_word()
-spaceman(load_word())
+# This function call will start the game
+main()
+
+# DRAFTS
+# -----------------------------------------------------------------------------
+# def spaceman(secret_word):
+#     # '''
+#     # A function that controls the game of spaceman. Will start spaceman in the command line.
+#     #
+#     # Args:
+#     #   secret_word (string): the secret word to guess.
+#     # '''
+#
+#     #TODO: show the player information about the game according to the project spec
+#     #TODO: Ask the player to guess one letter per round and check that it is only one letter
+#     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+#     #TODO: show the guessed word so far
+#     #TODO: check if the game has been won or lost
+#
+#     # '''
+#     # -----PSEUDOCODE-----
+#     # start spaceman:
+#     #     welcome message
+#     #     list of user-letter-guesses, populate with '_'
+#     #     list/string of alphabet-letters
+#     #     create a variable to store user's decision to play
+#     #     while user wants to play:
+#     #         create a variable to store number-of-guesses available (either 0 or length of secret word)
+#     #         while number-of-guesses is less than the length secret word:
+#     #             get letter from user
+#     #             add letter user-letter-guesses
+#     #             remove letter from alphabet-letters
+#     #             FUNCTION: check if letter is in secret word
+#     #                 if true,
+#     #                     then print correct message
+#     #                     FUNCTION: update placeholder text # input: user-letter-guesses, returns list
+#     #                     FUNCTION: check if word is secret word:
+#     #                         if true, return winner message
+#     #                 if false,
+#     #                     then print incorrect message
+#     #                     increment number of guesses available by 1
+#     #                 update letters available to guess
+#     #         return loser message
+#     #         ask user if user wants to play again
+#     # '''
+#     print("Welcome to Spaceman!\n------------------------------------------------------------")
+#     user_letter_guesses = ['_' for i in range(len(secret_word))]
+#     alphabet = "abcdefghijklmnopqrstuvwxyz"
+#     play = True
+#     num_of_guesses = 0
+#     continue_ = True
+#     while play == True:
+#         print(secret_word)
+#         while num_of_guesses < len(secret_word) and continue_ == True:
+#             letter = input('Enter a letter: ').lower()
+#             if letter not in alphabet:
+#                 print("You already guessed this letter!")
+#             elif letter.isalpha() == False:
+#                 print("Please enter a valid character.")
+#             elif len(letter) > 1:
+#                 print("Please enter only one number.")
+#             else:
+#                 if is_guess_in_word(letter, secret_word):
+#                     print("You got a letter!\n")
+#                     user_letter_guesses = get_guessed_word(letter, secret_word, user_letter_guesses)
+#                     if is_word_guessed(secret_word, user_letter_guesses):
+#                         print("You won!")
+#                         continue_ = False
+#                 else:
+#                     if num_of_guesses == len(secret_word):
+#                         print("You lost!")
+#                         continue_ = False
+#                     else:
+#                         num_of_guesses += 1
+#                         num_of_guesses_left = len(secret_word) - num_of_guesses
+#                         print ("Incorrect letter!\nYou have {} guesses left.\n".format(num_of_guesses_left))
+#                 alphabet = alphabet.replace(letter, '_')
+#                 if continue_ == True:
+#                     print(" ".join(user_letter_guesses))
+#                     print("You have these letters left: {}".format(alphabet))
+#                     print_ascii(len(secret_word), num_of_guesses)
+#                     print()
+#             print("------------------------------------------------------------")
+#         print("The secret word is {}".format(secret_word))
+#         play = input("Do you want to play again (y/n)?: ")
+#         play = False if play!='y' else True
+#         num_of_guesses = 0
+#         continue_ = True
+#     print("Thanks for playing! See ya later!")

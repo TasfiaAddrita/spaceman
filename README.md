@@ -26,7 +26,7 @@ Spaceman is a guessing game. There is a mystery word which the user tries to gue
 - [x] Prompt  the user to play again after a game ends. If they say yes, then start a new game.
 - [x] Change the number of incorrect guesses allowed to match the length of the mystery word
 - [x] Show the user the mystery word when they lose
-- [ ] Use ASCII art to draw the spaceman with each incorrect guess
+- [x] Use ASCII art to draw the spaceman with each incorrect guess
 - [ ] Sinister Spaceman: After the user guesses a correct letter, change the mystery word to be a new mystery word that is the same word length and uses the same correctly guessed letters
 
 ## How to run/setup
