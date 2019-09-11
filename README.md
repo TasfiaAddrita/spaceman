@@ -36,4 +36,4 @@ python3 spaceman.py
 ```
 ## Resources
 External resources used and needed for this project to be completed. Always cite your peer developers!
-- [x]
+- https://www.asciiart.eu/space/astronauts for spaceman ASCII art
