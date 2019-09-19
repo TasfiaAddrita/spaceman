@@ -114,8 +114,8 @@ def ascii_art():
       \ __| \___/     ||
  jgs  _{__} _{__}     ||
      (    )(    )     ||
- ^^~  `"""  `"""  ~^^^~^^~~~^^^~^^^~^^^~^^~^
-'''
+ ^^~  `"""  `"""  ~^^^~^^~~~^^^~^^^~^^^~^^~^\n'''
+
     # turns multi-string ascii to list
     index = 0
     ascii_.append([])
@@ -230,7 +230,7 @@ def main():
     print("Thanks for playing! See ya later!")
 
 # This function call will start the game
-main()
+# main()
 
 # ---- SINISTER CHALLENGE ----
 '''
